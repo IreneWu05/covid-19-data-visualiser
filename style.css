@@ -1,0 +1,101 @@
+body{
+    background-image: linear-gradient(to bottom right, #000000 , #00467b); 
+    height: 100%;  
+    margin: 0;  
+    padding:0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: "Roboto", sans-serif;
+}
+header{
+   height: 4rem;
+   margin: 0;
+}
+
+/*page heading*/
+h2{
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: rgb(244, 244, 244);
+    text-align: center;
+    padding-top:20px;
+}
+
+h3{
+    font-weight: 300;
+    font-size: .8rem;
+    color: rgb(244, 244, 244);
+    text-align: center;
+}
+
+/*grid*/
+.b1{
+    display: flex;
+    padding-top: 2rem;
+}
+
+.column {
+    flex: 2;
+    padding-right: 3rem;
+}
+
+/*set the column to take 3*/
+.column:nth-child(1) {
+    flex: 3;
+}
+
+ul {
+    display: flex;  
+    }
+
+li {
+    flex: 2;
+    line-height: 1rem;
+    font-size: .5rem;
+    text-align: center;
+    color: aliceblue;
+    list-style: none;
+}
+
+.li-h {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.basic {
+    height: 6rem;
+    padding:0 .2rem .5rem;
+    border: 0.5px solid rgba(209, 213, 219, 0.3);
+    border-radius: .8rem;
+    background: rgba(255, 255, 255, .5);
+
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+	backdrop-filter:  blur(10px) saturate(180%);
+    margin-bottom: 1.5rem;
+
+    
+}
+
+.graph1 {
+    height: 16rem;
+    padding:0 .2rem .5rem;
+    border: 0.5px solid rgba(209, 213, 219, 0.3);
+    border-radius: .8rem;
+    background: rgba(255, 255, 255, .5);
+
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+	backdrop-filter:  blur(10px) saturate(180%);
+    margin-bottom: 1.5rem;
+}
+
+.graph2 {
+    height: 16rem;
+    padding:0 .2rem .5rem;
+    border: 0.5px solid rgba(209, 213, 219, 0.3);
+    border-radius: .8rem;
+    background: rgba(255, 255, 255, .5);
+
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
+	backdrop-filter:  blur(10px) saturate(180%);
+    margin-bottom: 1.5rem;
+}

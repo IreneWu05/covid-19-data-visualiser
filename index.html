@@ -16,6 +16,7 @@
      <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700;900&family=Rubik+Dirt&display=swap" rel="stylesheet"></head>
 
          <!--import echarts-->
+    <script src="{{ url_for('static', filename='graph1.js') }}" ></script> 
     <script src="{{ url_for('static', filename='echarts.min.js') }}" ></script>
     <script src="{{ url_for('static', filename='jquery-3.5.1.min.js') }}" ></script> 
     
@@ -30,7 +31,7 @@
     <section class="b1">
         <!--left section_map-->
         <div class="column">
-          <div class="map" id = "main">
+          <div class="map" id = "map">
            
            
           
@@ -69,43 +70,97 @@
             </div><!--end of basic-->
 
             <div class="graph1">
+            
 
  <!--import echart graph-->           
     <script type="text/javascript">
+      
 
        var myChart = echarts.init(document.querySelector(".graph1"));
 
           var option = {
-      title: {
-        text: 'Monthly confirmed cases'
+      /*fill the container*/
+      grid: {
+        top:"60px",
+        left:"60px",
+        right:"60px",
+        bottom:"30px"
       },
+            
+      title: {
+        text: 'Monthly confirmed cases',
+        textStyle: {
+          color: 'white',
+          fontWeight: "200",
+          fontFamily: 'Roboto',
+          fontSize: 14,
+          top:"10px",
+        },
+    
+        x:'center',
+        subtext: 'Monthly data in New Zealand'
+      },
+
       tooltip: {},
       legend: {
         data: ['data']
       },
       xAxis: {
-        data: ['October', 'September', 'August', 'July', 'June', 'May', 'April', 'March','Febulary','January']
+        data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',  'Jul', 'Aug', 'Sep', 'Oct'],
+        axisLabel: {
+          color: "white"
+        }
       },
-      yAxis: {},
+      yAxis: {
+        axisLabel: {
+          color: "white"
+        }
+      },
       series: [
         {
           name: 'Confirmed cases',
-          data: [ 10, 20, 36, 10, 10, 20, 10, 10, 10, 10, 10, 10],
+          data: [10, 20, 36, 10, 10, 20, 10, 10, 10, 10, 10, 10],
           type: 'bar',
           showBackground: true,
           backgroundStyle: {
-          color: 'rgba(180, 180, 180, 0.2)'
-      }
+          color: 'rgba(180, 180, 180, 0.2)'/*grey background*/
+            },
+            
+          
+          itemStyle: {
+          normal: {
+          color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+                offset: 0,
+                color: 'rgba(237, 194, 26)'
+            }, {
+                offset: 0.9,
+                color: 'rgba(233, 140, 19)'
+            }, ], false)
+        }
+       }
+
+
         }
       ]
+
+     
     };
     myChart.setOption(option);
+    window.addEventListener('resize', function() {
+      myChart.resize();
+    });
+    
+/* graph 2*/
+
+/*  end of graph 2*/
+
+
   
    
-    var myChart = echarts.init(document.getElementById('main'));
+    var myChart = echarts.init(document.getElementById('map'));
 
       myChart.showLoading();
-      $.get('/static/nz_region.json', function (geoJson) {
+      $.get('/static/manawatu.json', function (geoJson) {
         myChart.hideLoading();
         echarts.registerMap('NZ', geoJson);
         myChart.setOption(
@@ -195,7 +250,6 @@
           })
         );
       });
- 
 
     </script>
     </div><!--end of graph1-->

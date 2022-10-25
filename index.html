@@ -71,187 +71,6 @@
 
             <div class="graph1">
             
-
- <!--import echart graph-->           
-    <script type="text/javascript">
-      
-
-       var myChart = echarts.init(document.querySelector(".graph1"));
-
-          var option = {
-      /*fill the container*/
-      grid: {
-        top:"60px",
-        left:"60px",
-        right:"60px",
-        bottom:"30px"
-      },
-            
-      title: {
-        text: 'Monthly confirmed cases',
-        textStyle: {
-          color: 'white',
-          fontWeight: "200",
-          fontFamily: 'Roboto',
-          fontSize: 14,
-          top:"10px",
-        },
-    
-        x:'center',
-        subtext: 'Monthly data in New Zealand'
-      },
-
-      tooltip: {},
-      legend: {
-        data: ['data']
-      },
-      xAxis: {
-        data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',  'Jul', 'Aug', 'Sep', 'Oct'],
-        axisLabel: {
-          color: "white"
-        }
-      },
-      yAxis: {
-        axisLabel: {
-          color: "white"
-        }
-      },
-      series: [
-        {
-          name: 'Confirmed cases',
-          data: [10, 20, 36, 10, 10, 20, 10, 10, 10, 10, 10, 10],
-          type: 'bar',
-          showBackground: true,
-          backgroundStyle: {
-          color: 'rgba(180, 180, 180, 0.2)'/*grey background*/
-            },
-            
-          
-          itemStyle: {
-          normal: {
-          color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
-                offset: 0,
-                color: 'rgba(237, 194, 26)'
-            }, {
-                offset: 0.9,
-                color: 'rgba(233, 140, 19)'
-            }, ], false)
-        }
-       }
-
-
-        }
-      ]
-
-     
-    };
-    myChart.setOption(option);
-    window.addEventListener('resize', function() {
-      myChart.resize();
-    });
-    
-/* graph 2*/
-
-/*  end of graph 2*/
-
-
-  
-   
-    var myChart = echarts.init(document.getElementById('map'));
-
-      myChart.showLoading();
-      $.get('/static/manawatu.json', function (geoJson) {
-        myChart.hideLoading();
-        echarts.registerMap('NZ', geoJson);
-        myChart.setOption(
-          (option = {
-            title: {
-              text: 'New Zealand Confirmed Cases in Cities',
-              subtext: 'Data from StatsNZ',
-              sublink:
-                'https://www.stats.govt.nz/experimental/covid-19-data-portal/'
-            },
-            tooltip: {
-              trigger: 'item',
-              formatter: '{b}<br/>{c} (p / km2)'
-            },
-            toolbox: {
-              show: true,
-              orient: 'vertical',
-              left: 'right',
-              top: 'center',
-              feature: {
-                dataView: { readOnly: false },
-                restore: {},
-                saveAsImage: {}
-              }
-            },
-            visualMap: {
-              min: 800,
-              max: 50000,
-              text: ['High', 'Low'],
-              realtime: false,
-              calculable: true,
-              inRange: {
-                color: ['lightskyblue', 'yellow', 'orangered']
-              }
-            },
-            series: [
-              {
-                name: 'New Zealand Confirmed Cases in Cities',
-                type: 'map',
-                map: 'NZ',
-                label: {
-                  show: true
-                },
-                data: [
-                  { name: '中西区', value: 20057.34 },
-                  { name: '湾仔', value: 15477.48 },
-                  { name: '东区', value: 31686.1 },
-                  { name: '南区', value: 6992.6 },
-                  { name: '油尖旺', value: 44045.49 },
-                  { name: '深水埗', value: 40689.64 },
-                  { name: '九龙城', value: 37659.78 },
-                  { name: '黄大仙', value: 45180.97 },
-                  { name: '观塘', value: 55204.26 },
-                  { name: '葵青', value: 21900.9 },
-                  { name: '荃湾', value: 4918.26 },
-                  { name: '屯门', value: 5881.84 },
-                  { name: '元朗', value: 4178.01 },
-                  { name: '北区', value: 2227.92 },
-                  { name: '大埔', value: 2180.98 },
-                  { name: '沙田', value: 9172.94 },
-                  { name: '西贡', value: 3368 },
-                  { name: '离岛', value: 806.98 }
-                ],
-                // 自定义名称映射
-                nameMap: {
-                  'Central and Western': '中西区',
-                  Eastern: '东区',
-                  Islands: '离岛',
-                  'Kowloon City': '九龙城',
-                  'Kwai Tsing': '葵青',
-                  'Kwun Tong': '观塘',
-                  North: '北区',
-                  'Sai Kung': '西贡',
-                  'Sha Tin': '沙田',
-                  'Sham Shui Po': '深水埗',
-                  Southern: '南区',
-                  'Tai Po': '大埔',
-                  'Tsuen Wan': '荃湾',
-                  'Tuen Mun': '屯门',
-                  'Wan Chai': '湾仔',
-                  'Wong Tai Sin': '黄大仙',
-                  'Yau Tsim Mong': '油尖旺',
-                  'Yuen Long': '元朗'
-                }
-              }
-            ]
-          })
-        );
-      });
-
-    </script>
     </div><!--end of graph1-->
 
             <div class="graph2">
@@ -261,6 +80,372 @@
       </div>
         
     </section>
+
+   <!--import echart graph-->           
+   <script type="text/javascript">
+      
+
+    var myChart1 = echarts.init(document.querySelector(".graph1"));
+
+       var option1 = {
+   /*fill the container*/
+   grid: {
+     top:"60px",
+     left:"60px",
+     right:"60px",
+     bottom:"30px"
+   },
+         
+   title: {
+     text: 'Monthly confirmed cases',
+     textStyle: {
+       color: 'white',
+       fontWeight: "200",
+       fontFamily: 'Roboto',
+       fontSize: 14,
+       top:"10px",
+     },
+ 
+     x:'center',
+     subtext: 'Monthly data in New Zealand'
+   },
+
+   tooltip: {},
+   legend: {
+     data: ['data']
+   },
+   xAxis: {
+     data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',  'Jul', 'Aug', 'Sep', 'Oct'],
+     axisLabel: {
+       color: "white"
+     }
+   },
+   yAxis: {
+     axisLabel: {
+       color: "white"
+     }
+   },
+   series: [
+     {
+       name: 'Confirmed cases',
+       data: [10, 20, 36, 10, 10, 20, 10, 10, 10, 10, 10, 10],
+       type: 'bar',
+       showBackground: true,
+       backgroundStyle: {
+       color: 'rgba(180, 180, 180, 0.2)'/*grey background*/
+         },
+         
+       
+       itemStyle: {
+       normal: {
+       color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+             offset: 0,
+             color: 'rgba(237, 194, 26)'
+         }, {
+             offset: 0.9,
+             color: 'rgba(233, 140, 19)'
+         }, ], false)
+     }
+    }
+
+
+     }
+   ]
+
+  
+ };
+ myChart1.setOption(option1);
+ window.addEventListener('resize', function() {
+   myChart.resize();
+ });
+ 
+/* graph 2*/
+var myChart2 = echarts.init(document.querySelector(".graph2"));
+
+var option2 = {
+  color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+  title: {
+    text: 'Gradient Stacked Area Chart'
+  },
+  tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'cross',
+      label: {
+        backgroundColor: '#6a7985'
+      }
+    }
+  },
+  legend: {
+    data: ['Line 1', 'Line 2', 'Line 3', 'Line 4', 'Line 5']
+  },
+  toolbox: {
+    feature: {
+      saveAsImage: {}
+    }
+  },
+  grid: {
+    left: '3%',
+    right: '4%',
+    bottom: '3%',
+    containLabel: true
+  },
+  xAxis: [
+    {
+      type: 'category',
+      boundaryGap: false,
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    }
+  ],
+  yAxis: [
+    {
+      type: 'value'
+    }
+  ],
+  series: [
+    {
+      name: 'Line 1',
+      type: 'line',
+      stack: 'Total',
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(128, 255, 165)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(1, 191, 236)'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [140, 232, 101, 264, 90, 340, 250]
+    },
+    {
+      name: 'Line 2',
+      type: 'line',
+      stack: 'Total',
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(0, 221, 255)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(77, 119, 255)'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [120, 282, 111, 234, 220, 340, 310]
+    },
+    {
+      name: 'Line 3',
+      type: 'line',
+      stack: 'Total',
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(55, 162, 255)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(116, 21, 219)'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [320, 132, 201, 334, 190, 130, 220]
+    },
+    {
+      name: 'Line 4',
+      type: 'line',
+      stack: 'Total',
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(255, 0, 135)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(135, 0, 157)'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [220, 402, 231, 134, 190, 230, 120]
+    },
+    {
+      name: 'Line 5',
+      type: 'line',
+      stack: 'Total',
+      smooth: true,
+      lineStyle: {
+        width: 0
+      },
+      showSymbol: false,
+      label: {
+        show: true,
+        position: 'top'
+      },
+      areaStyle: {
+        opacity: 0.8,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          {
+            offset: 0,
+            color: 'rgb(255, 191, 0)'
+          },
+          {
+            offset: 1,
+            color: 'rgb(224, 62, 76)'
+          }
+        ])
+      },
+      emphasis: {
+        focus: 'series'
+      },
+      data: [220, 302, 181, 234, 210, 290, 150]
+    }
+  ]
+};
+ myChart2.setOption(option2);
+/*  end of graph 2*/
+
+
+
+
+ var myChart = echarts.init(document.getElementById('map'));
+
+   myChart.showLoading();
+   $.get('/static/manawatu.json', function (geoJson) {
+     myChart.hideLoading();
+     echarts.registerMap('NZ', geoJson);
+     myChart.setOption(
+       (option = {
+         title: {
+           text: 'New Zealand Confirmed Cases in Cities',
+           subtext: 'Data from StatsNZ',
+           sublink:
+             'https://www.stats.govt.nz/experimental/covid-19-data-portal/'
+         },
+         tooltip: {
+           trigger: 'item',
+           formatter: '{b}<br/>{c} (p / km2)'
+         },
+         toolbox: {
+           show: true,
+           orient: 'vertical',
+           left: 'right',
+           top: 'center',
+           feature: {
+             dataView: { readOnly: false },
+             restore: {},
+             saveAsImage: {}
+           }
+         },
+         visualMap: {
+           min: 800,
+           max: 50000,
+           text: ['High', 'Low'],
+           realtime: false,
+           calculable: true,
+           inRange: {
+             color: ['lightskyblue', 'yellow', 'orangered']
+           }
+         },
+         series: [
+           {
+             name: 'New Zealand Confirmed Cases in Cities',
+             type: 'map',
+             map: 'NZ',
+             label: {
+               show: true
+             },
+             data: [
+               { name: '中西区', value: 20057.34 },
+               { name: '湾仔', value: 15477.48 },
+               { name: '东区', value: 31686.1 },
+               { name: '南区', value: 6992.6 },
+               { name: '油尖旺', value: 44045.49 },
+               { name: '深水埗', value: 40689.64 },
+               { name: '九龙城', value: 37659.78 },
+               { name: '黄大仙', value: 45180.97 },
+               { name: '观塘', value: 55204.26 },
+               { name: '葵青', value: 21900.9 },
+               { name: '荃湾', value: 4918.26 },
+               { name: '屯门', value: 5881.84 },
+               { name: '元朗', value: 4178.01 },
+               { name: '北区', value: 2227.92 },
+               { name: '大埔', value: 2180.98 },
+               { name: '沙田', value: 9172.94 },
+               { name: '西贡', value: 3368 },
+               { name: '离岛', value: 806.98 }
+             ],
+             // 自定义名称映射
+             nameMap: {
+               'Central and Western': '中西区',
+               Eastern: '东区',
+               Islands: '离岛',
+               'Kowloon City': '九龙城',
+               'Kwai Tsing': '葵青',
+               'Kwun Tong': '观塘',
+               North: '北区',
+               'Sai Kung': '西贡',
+               'Sha Tin': '沙田',
+               'Sham Shui Po': '深水埗',
+               Southern: '南区',
+               'Tai Po': '大埔',
+               'Tsuen Wan': '荃湾',
+               'Tuen Mun': '屯门',
+               'Wan Chai': '湾仔',
+               'Wong Tai Sin': '黄大仙',
+               'Yau Tsim Mong': '油尖旺',
+               'Yuen Long': '元朗'
+             }
+           }
+         ]
+       })
+     );
+   });
+
+ </script>
+
   </body>
 
 </html>

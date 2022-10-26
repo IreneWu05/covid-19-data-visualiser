@@ -19,7 +19,7 @@
     <script src="{{ url_for('static', filename='graph1.js') }}" ></script> 
     <script src="{{ url_for('static', filename='echarts.min.js') }}" ></script>
     <script src="{{ url_for('static', filename='jquery-3.5.1.min.js') }}" ></script> 
-    
+    <!--http://127.0.0.1:8000-->
   </head>
 
   
@@ -50,20 +50,35 @@
                 <div class="inner-section">
                 <div class="statits">
                     <ul>
-                    <li class="li-h" style="color:brown">222</li>
-                    <li class="li-h">222</li>
-                    <li class="li-h">222</li>
-                    <li class="li-h" style="color:rgb(57, 179, 46)">222</li>
+                      {% for Values in Value %}
+                      <tr>
+                        <td><li class="li-h" style="color:brown">{{Values[1]}}</li></td>
+                      </tr>
+                  
+                    
+                      <tr>
+                        <td><li class="li-h">{{Values[0]}}</li></td>
+                      </tr>
+                    
+                      <tr>
+                      <td> <li class="li-h" style="color:rgb(57, 179, 46)">{{ Values[1]}}</li></td>
+                    </tr>
+                  
+                 
+                    <tr>
+                      <td><li class="li-h">{{Values[3]}}</li></td>
+                    </tr>
+                  {% endfor %}
                     </ul>
+                   
                 </div>
            
                 <div class="texts">
                     <ul>
-                        <li>Cases Confirmed</li>
-                        <li>Monthly cases</li>
-                        <li>Border cases</li>
+                        <li>Active Cases</li>
+                        <li>Total Cases Confirmed</li>
+                        <li>Deaths</li>
                         <li>Recovered</li>
-                   
                         </ul>
                 </div>
             </div><!--end of inner section-->
@@ -88,56 +103,71 @@
     var myChart1 = echarts.init(document.querySelector(".graph1"));
 
        var option1 = {
-   /*fill the container*/
+   /*fill the container*/ 
    grid: {
-     top:"60px",
-     left:"60px",
-     right:"60px",
-     bottom:"30px"
+    top:80,
+    bottom:40,
    },
          
    title: {
-     text: 'Monthly confirmed cases',
+     text: 'Monthly new community Covid-19 cases',
+     left: 'center',
+     top: 10,
      textStyle: {
        color: 'white',
-       fontWeight: "200",
+       fontWeight: "300",
        fontFamily: 'Roboto',
-       fontSize: 14,
-       top:"10px",
+       fontSize: 14, 
      },
  
-     x:'center',
-     subtext: 'Monthly data in New Zealand'
+    
+     subtext: 'Last updated: 19 October 2022'
    },
 
-   tooltip: {},
+   tooltip: {
+    trigger: 'axis',
+    axisPointer: {
+      type: 'shadow'
+    }
+
+  },
    legend: {
      data: ['data']
    },
+
    xAxis: {
      data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',  'Jul', 'Aug', 'Sep', 'Oct'],
      axisLabel: {
-       color: "white"
-     }
+       color: "#ccc"
+     },
+     axisLine: {
+      lineStyle: {
+        color: "#ccc"
+      },
+   },
    },
    yAxis: {
      axisLabel: {
        color: "white"
-     }
+     },
+
+     axisLine: {
+      lineStyle: {
+        color: "#ccc"
+      },
    },
+  },
    series: [
      {
        name: 'Confirmed cases',
        data: [10, 20, 36, 10, 10, 20, 10, 10, 10, 10, 10, 10],
        type: 'bar',
-       showBackground: true,
-       backgroundStyle: {
-       color: 'rgba(180, 180, 180, 0.2)'/*grey background*/
-         },
-         
        
+       barWidth: 15,  
+      
        itemStyle: {
        normal: {
+        barBorderRadius: [8,8,0,0],
        color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
              offset: 0,
              color: 'rgba(237, 194, 26)'
@@ -145,6 +175,7 @@
              offset: 0.9,
              color: 'rgba(233, 140, 19)'
          }, ], false)
+         
      }
     }
 
@@ -159,6 +190,8 @@
    myChart.resize();
  });
  
+
+
 /* graph 2*/
 var myChart2 = echarts.init(document.querySelector(".graph2"));
 

@@ -17,8 +17,15 @@ def index():
     data1 = cur.execute(sql)
     for item in data1:
         Value.append(item)
-        
-    
+
+    bar1 = []
+    con = sqlite3.connect('activedata.db')
+    cur = con.cursor()
+    sql = 'SELECT Value from data WHERE ID = 752'
+    data2 = cur.execute(sql)
+    for item in data2:
+        bar1.append(' '.join(str(i) for i in item))#remove the brackets
+
     cur.close()
     con.close()
-    return render_template('index.html',Value=Value)
+    return render_template('index.html',Value=Value, bar1=bar1)

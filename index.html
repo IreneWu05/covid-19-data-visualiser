@@ -51,7 +51,7 @@
                     <ul>
                       {% for Values in Value %}
                       <tr>
-                        <td><li class="li-h" style="color:brown">{{Values[1]}}</li></td>
+                        <td><li class="li-h">{{Values[1]}}</li></td>
                       </tr>
                   
                     
@@ -60,12 +60,12 @@
                       </tr>
                     
                       <tr>
-                      <td> <li class="li-h" style="color:rgb(57, 179, 46)">{{ Values[1]}}</li></td>
+                      <td> <li class="li-h-red">{{ Values[2]}}</li></td>
                     </tr>
                   
                  
                     <tr>
-                      <td><li class="li-h">{{Values[3]}}</li></td>
+                      <td><li class="li-h-green">{{Values[3]}}</li></td>
                     </tr>
                   {% endfor %}
                     </ul>
@@ -74,7 +74,7 @@
            
                 <div class="texts">
                     <ul>
-                        <li>Active Cases</li>
+                        <li>Total Active Cases</li>
                         <li>Total Cases Confirmed</li>
                         <li>Deaths</li>
                         <li>Recovered</li>
@@ -151,14 +151,15 @@ var option3 = {
 };
 
 myChart3.setOption(option3);
-/*end of header*/
+/*end of header animation affect*/
 
 
 
-
+ /* graph 1, bar graph*/
     var myChart1 = echarts.init(document.querySelector(".graph1"));
        var option1 = {
-   /*fill the container*/ 
+
+/*position, fill the container*/ 
    grid: {
     left: '3%',
     right: '4%',
@@ -176,9 +177,6 @@ myChart3.setOption(option3);
        fontFamily: 'Roboto',
        fontSize: 14, 
      },
- 
-    
-     subtext: 'Last updated: 17 October 2022'
    },
 
    /*hover trigger shadow effect*/
@@ -204,7 +202,7 @@ myChart3.setOption(option3);
       },
    },
 
-
+/*axis settings*/
    },
    yAxis: {
      axisLabel: {
@@ -216,47 +214,52 @@ myChart3.setOption(option3);
         color: "#ccc"
       },
    },
+   splitLine: {
+    lineStyle:{
+      color:'#061324'
+    }
+   }
   },
 
+/*////////////////////*/
+/*main*/  
    series: [
      {
        name: 'Active cases',
        data: [ '{{graph1[0]}}', '{{graph1[1]}}', '{{graph1[2]}}','{{graph1[3]}}', '{{graph1[4]}}', '{{graph1[5]}}', '{{graph1[6]}}','{{graph1[7]}}', '{{graph1[8]}}', '{{graph1[9]}}'],
-       type: 'bar',
-       
+       type: 'bar', 
        barWidth: 15,     
        itemStyle: {
        normal: {
-        barBorderRadius: [8,8,0,0],
-       color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+       barBorderRadius: [8,8,0,0],
+       color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{ 
+        /*set the bar color to gradient, x0, y0, x2, y2*/
              offset: 0,
              color: 'rgba(237, 194, 26)'
          }, {
              offset: 0.9,
              color: 'rgba(233, 140, 19)'
-         }, ], false)
-         
+         }, ], false)      
      }
     }
-
-
      }
    ]
-
-  
  };
  myChart1.setOption(option1);
+
+ /*resize while the broswer changes*/
  window.addEventListener('resize', function() {
    myChart.resize();
  });
- 
+ /* end of graph 1*/
 
 
 /* graph 2*/
 var myChart2 = echarts.init(document.querySelector(".graph2"));
 
+
 var option2 = {
-  color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+  color: ['rgba(237, 194, 26)', '#00DDFF', 'rgba(233, 140, 19)'], /*color of the panel*/
   title: {
     text: 'Annualy active Covid-19 cases',
      left: 'center',
@@ -268,63 +271,132 @@ var option2 = {
        fontSize: 14, 
      }
   },
+
+  /*hover affect*/
   tooltip: {
     trigger: 'axis',
     axisPointer: {
       type: 'cross',
       label: {
-        backgroundColor: '#6a7985'
+        backgroundColor: '#ffa750'/*lable color*/
       }
     }
   },
-  legend: {
-    data: ['2020', '2021', '2022']
-    
-  },
+
+/*view data tool*/
   toolbox: {
-    feature: {
-      saveAsImage: {}
-    }
+           orient: 'vertical',
+           top: '2%',
+           right: '3%',
+           feature: {
+            dataView: {
+                show: true,
+                readOnly: true,
+                title: 'View Data',
+                lang: ["Annualy active Covid-19 cases", "Close"],/*title & button*/
+                buttonTextColor: '#fff',
+                buttonColor: '#ffa750',
+
+                optionToContent: function (opt) {
+                    var axisData = opt.xAxis[0].data; /*data from the x axis*/
+                    var series = opt.series; 
+                    var tdHeads = '<td  style="padding:10px 10px">Month</td>'; /*header row*/
+
+                    series.forEach(function (item) {
+                        tdHeads += '<td style="padding: 10px 10px">'+item.name+'</td>';
+                    });
+                    /*table styleing*/
+                    var table = '<table border="1" style="width: 100%; margin: 20px 20px 20px 20px; border-collapse:collapse;font-size:14px;text-align:center"><tbody><tr>'+tdHeads+'</tr>';
+                    var tdBodys = '';
+                    for (var i = 0, l = axisData.length; i < l; i++) {
+                        for (var j = 0; j < series.length; j++) {
+                            if(typeof(series[j].data[i]) == 'object'){
+                                tdBodys += '<td>'+series[j].data[i].value+'</td>';
+                            }else{
+                                tdBodys += '<td>'+ series[j].data[i]+'</td>';
+                            }
+                        }
+                        table += '<tr><td style="padding: 0 10px">'+axisData[i]+'</td>'+ tdBodys +'</tr>';
+                        tdBodys = '';
+                    }
+                    table += '</tbody></table>';
+                    return table;
+                }
+            },
+
+           }
+         },
+
+  /*panel text*/
+  legend: {
+    data: ['2020', '2021', '2022'],
+    top: '90%',
+    left: 'center',
   },
+
+  
+/*position*/
   grid: {
     left: '3%',
     right: '4%',
-    bottom: '3%',
+    bottom: '13%',
+    top: '18%',
     containLabel: true
   },
+
+/*axis settings*/
   xAxis: [
     {
       type: 'category',
+      axisTick: {
+        alignWithLabel: true
+      },
       boundaryGap: false,
-      data: ['Jan', 'Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov','Dec']
+      data: ['Jan', 'Feb', 'Mar', 'Apr', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct','Nov','Dec'],
+      axisLabel: {
+       color: '#ccc',
+     },
     }
   ],
+
   yAxis: [
+    
     {
-      type: 'value'
+    splitLine: {
+    lineStyle:{
+      color:'#061324'
     }
+   },
+   axisLabel: {
+       color: 'white',
+     },
+      type: 'value'
+    },
   ],
+
+
+/*////////////////////*/
+/*section 1, 2020 data*/
   series: [
     {
-
       name: '2020',
       type: 'line',
       stack: 'Total',
       smooth: true,
       lineStyle: {
-        width: 0
+        width: 2,
       },
-      showSymbol: false,
+      showSymbol: true,
       areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      opacity: .3,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [ /*gradient*/
           {
             offset: 0,
-            color: 'rgb(128, 255, 165)'
+            color: 'rgba(237, 194, 26)'
           },
           {
             offset: 1,
-            color: 'rgb(1, 191, 236)'
+            color: 'rgba(233, 140, 19)'
           }
         ])
         
@@ -336,25 +408,28 @@ var option2 = {
       data: [ '{{graph2[0]}}', '{{graph2[1]}}','{{graph2[2]}}','{{graph2[3]}}','{{graph2[4]}}','{{graph2[5]}}',  '{{graph2[6]}}', '{{graph2[7]}}','{{graph2[8]}}','{{graph2[9]}}','{{graph2[10]}}','{{graph2[11]}}']
       
     },
+
+/*////////////////////*/
+/*section 2, 2021 data*/
     {
       name: '2021',
       type: 'line',
       stack: 'Total',
       smooth: true,
       lineStyle: {
-        width: 0
+        width: 2
       },
-      showSymbol: false,
+      showSymbol: true,
       areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        opacity: .3,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [ /*gradient*/
           {
             offset: 0,
-            color: 'rgb(0, 221, 255)'
+            color: '#14c8d4'
           },
           {
             offset: 1,
-            color: 'rgb(77, 119, 255)'
+            color: '#43eec6'
           }
         ])
       },
@@ -363,25 +438,28 @@ var option2 = {
       },
       data: ['{{graph2[12]}}', '{{graph2[13]}}','{{graph2[14]}}','{{graph2[15]}}','{{graph2[16]}}','{{graph2[17]}}',  '{{graph2[18]}}', '{{graph2[19]}}','{{graph2[20]}}','{{graph2[21]}}','{{graph2[22]}}','{{graph2[23]}}']
     },
+
+/*////////////////////*/
+/*section 3, 2022 data*/
     {
       name: '2022',
       type: 'line',
       stack: 'Total',
       smooth: true,
       lineStyle: {
-        width: 0
+        width: 2
       },
-      showSymbol: false,
+      showSymbol: true,
       areaStyle: {
-        opacity: 0.8,
-        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+        opacity: .3,
+        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [ /*gradient*/
           {
             offset: 0,
-            color: 'rgb(55, 162, 255)'
+            color: '#d6352f'
           },
           {
             offset: 1,
-            color: 'rgb(116, 21, 219)'
+            color: 'rgba(233, 140, 19)'
           }
         ])
       },
@@ -394,15 +472,12 @@ var option2 = {
   
 };
 
-
  myChart2.setOption(option2);
-
- 
 /*  end of graph 2*/
 
 
 
-
+/* map graph*/
  var myChart = echarts.init(document.getElementById('map'));
 
    myChart.showLoading();
@@ -414,6 +489,7 @@ var option2 = {
          title: {
            text: 'New Zealand Confirmed Cases in Cities',
            subtext: 'Data from StatsNZ',
+           subtext: 'Last updated: 17 October 2022',
            sublink:
              'https://www.stats.govt.nz/experimental/covid-19-data-portal/'
          },
@@ -496,6 +572,7 @@ var option2 = {
        })
      );
    });
+/* end of map graph*/
 
  </script>
 
